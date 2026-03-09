@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Briefing Matinal — Thibaud</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --nhl-blue: #0a3d7a; --nba-red: #c8102e; --om-blue: #0d4f9e;
+    --orange: #FF9500; --bg: #f0f2f5; --card: #ffffff; --border: #f0f0f0;
+  }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: #111; min-height: 100vh; }
+  #loading { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; gap: 16px; color: #888; }
+  .spinner { width: 40px; height: 40px; border: 3px solid #e0e0e0; border-top-color: var(--orange); border-radius: 50%; animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  #app { display: none; max-width: 680px; margin: 0 auto; padding: 0 0 60px; }
+  .masthead { background: #0a0a0a; padding: 28px 24px 22px; position: relative; overflow: hidden; }
+  .masthead::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #FF3B30, #FF9500, #34C759, #007AFF, #AF52DE); }
+  .masthead-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; }
+  .masthead h1 { font-family: 'Oswald', sans-serif; font-size: 30px; font-weight: 700; color: #fff; letter-spacing: 1px; text-transform: uppercase; line-height: 1.1; }
+  .masthead h1 span { color: var(--orange); }
+  .masthead-date { color: #fff; font-size: 15px; font-weight: 700; text-transform: capitalize; }
+  .masthead-time { color: #666; font-size: 11px; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .day-nav { display: flex; align-items: center; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  .day-btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: #aaa; border-radius: 8px; padding: 6px 12px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.15s; }
+  .day-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
+  .day-btn.active { background: var(--orange); border-color: var(--orange); color: #fff; }
+  .fav-strip { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+  .fav-chip { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 4px 11px; font-size: 12px; color: #ccc; font-weight: 600; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; }
+  .dot-red { background: #FF3B30; } .dot-silver { background: #aaa; } .dot-blue { background: #007AFF; }
+  .meteo-wrap { padding: 16px 16px 0; }
+  .meteo-card { background: linear-gradient(135deg, #1c3a5e, #0d2137); border-radius: 16px; padding: 20px; color: white; display: flex; justify-content: space-between; align-items: center; }
+  .meteo-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #7eb8f7; margin-bottom: 4px; font-weight: 600; }
+  .meteo-city { font-size: 20px; font-weight: 800; }
+  .meteo-condition { font-size: 14px; color: #aac8e8; margin-top: 5px; }
+  .meteo-detail { font-size: 12px; color: #7eb8f7; margin-top: 5px; }
+  .meteo-temp { font-size: 54px; font-weight: 900; line-height: 1; }
+  .meteo-temp sup { font-size: 22px; vertical-align: top; margin-top: 10px; display: inline-block; }
+  .meteo-range { font-size: 13px; color: #aac8e8; margin-top: 5px; text-align: right; }
+  .meteo-alert { background: rgba(255,149,0,0.15); border: 1px solid rgba(255,149,0,0.3); border-radius: 8px; padding: 8px 12px; font-size: 12px; color: var(--orange); margin-top: 10px; }
+  .section { margin: 16px 16px 0; }
+  .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .section-header h2 { font-family: 'Oswald', sans-serif; font-size: 19px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+  .s-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 3px 8px; border-radius: 4px; color: white; white-space: nowrap; }
+  .s-line { height: 2px; border-radius: 2px; flex: 1; }
+  .planning-card { background: var(--card); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .event-row { display: flex; gap: 14px; align-items: flex-start; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+  .event-row:last-child { border-bottom: none; }
+  .event-time { font-size: 12px; font-weight: 700; color: #007AFF; width: 44px; flex-shrink: 0; margin-top: 2px; }
+  .event-title { font-size: 14px; font-weight: 600; }
+  .event-dur { font-size: 11px; color: #888; margin-top: 2px; }
+  .planning-empty { text-align: center; padding: 24px 16px; color: #888; font-size: 14px; }
+  .planning-empty .e-icon { font-size: 28px; margin-bottom: 8px; }
+  .planning-empty strong { color: #111; display: block; font-size: 15px; margin-bottom: 4px; }
+  .hero-card { background: var(--card); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+  .hero-head { padding: 13px 18px; display: flex; justify-content: space-between; align-items: center; }
+  .hero-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.7); }
+  .hero-tag { font-size: 10px; font-weight: 800; background: var(--orange); color: white; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .hero-score-row { padding: 16px 18px; display: flex; align-items: center; background: white; }
+  .hero-team { flex: 1; }
+  .hero-team.right { text-align: right; }
+  .hero-team-name { font-size: 17px; font-weight: 800; }
+  .hero-team-sub { font-size: 12px; color: #888; margin-top: 2px; }
+  .hero-score-num { font-family: 'Oswald', sans-serif; font-size: 38px; font-weight: 700; width: 100px; text-align: center; letter-spacing: 3px; }
+  .hero-body { background: #fafafa; padding: 12px 18px; border-top: 1px solid var(--border); }
+  .hero-body-ns { background: white; padding: 16px 18px; }
+  .hero-fact { font-size: 13px; color: #444; line-height: 1.6; }
+  .hero-fact strong { color: #111; }
+  .scores-list { display: flex; flex-direction: column; gap: 6px; }
+  .score-card { background: var(--card); border-radius: 12px; padding: 11px 16px; display: flex; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+  .sc-team { flex: 1; }
+  .sc-team.right { text-align: right; }
+  .sc-name { font-size: 14px; font-weight: 700; }
+  .sc-city { font-size: 11px; color: #888; margin-top: 1px; }
+  .sc-mid { display: flex; flex-direction: column; align-items: center; width: 86px; flex-shrink: 0; }
+  .sc-score { font-family: 'Oswald', sans-serif; font-size: 26px; font-weight: 700; letter-spacing: 2px; line-height: 1; }
+  .sc-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; padding: 2px 6px; border-radius: 3px; }
+  .tag-ot { background: #fff3e0; color: #e65100; }
+  .sc-note { font-size: 11px; color: #888; margin-top: 2px; font-style: italic; text-align: center; }
+  .news-card { background: var(--card); border-radius: 12px; padding: 13px 15px; display: flex; gap: 12px; align-items: flex-start; box-shadow: 0 1px 3px rgba(0,0,0,0.05); margin-top: 8px; }
+  .news-icon { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+  .ni-orange { background: #fff3e0; } .ni-blue { background: #e3f2fd; } .ni-green { background: #e8f5e9; } .ni-red { background: #ffebee; }
+  .news-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #bbb; margin-bottom: 3px; }
+  .news-text { font-size: 13px; color: #333; line-height: 1.5; }
+  .news-text strong { color: #111; }
+  .foot-table { background: var(--card); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); margin-bottom: 10px; }
+  .ft-head { padding: 10px 16px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: white; display: flex; justify-content: space-between; align-items: center; }
+  .ft-head span { font-size: 10px; color: rgba(255,255,255,0.6); font-weight: 400; }
+  .ft-row { display: flex; align-items: center; padding: 9px 16px; border-top: 1px solid #f5f5f5; gap: 8px; }
+  .ft-team { font-size: 13px; font-weight: 600; flex: 1; }
+  .ft-team.right { text-align: right; }
+  .ft-score { font-family: 'Oswald', sans-serif; font-size: 17px; font-weight: 600; width: 46px; text-align: center; }
+  .suggestions { display: flex; flex-direction: column; gap: 7px; }
+  .sug-item { background: var(--card); border-radius: 10px; padding: 11px 14px; display: flex; align-items: flex-start; gap: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+  .sug-time { font-size: 11px; font-weight: 700; color: #007AFF; width: 50px; flex-shrink: 0; margin-top: 2px; }
+  .sug-text { font-size: 13px; color: #333; line-height: 1.4; }
+  .sug-text strong { color: #111; }
+  .app-footer { background: #0a0a0a; margin-top: 24px; padding: 20px 24px; text-align: center; }
+  .app-footer .msg { color: #555; font-size: 13px; line-height: 1.8; }
+  .app-footer .msg strong { color: var(--orange); }
+  .app-footer .sub { color: #333; font-size: 11px; margin-top: 8px; }
+  .no-data { text-align: center; padding: 20px; color: #aaa; font-size: 14px; background: var(--card); border-radius: 12px; }
+  @media (max-width: 480px) {
+    .masthead { padding: 20px 16px 18px; } .masthead h1 { font-size: 24px; }
+    .section { margin: 12px 12px 0; } .meteo-wrap { padding: 12px 12px 0; }
+    .hero-score-num { font-size: 30px; width: 80px; } .hero-team-name { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+<div id="loading"><div class="spinner"></div><span>Chargement du briefing…</span></div>
+<div id="app"></div>
+<script>
+const GITHUB_USER='thibaudmartingibiard-max',REPO='briefing';
+const BASE=`https://raw.githubusercontent.com/${GITHUB_USER}/${REPO}/main`;
+const DAYS=['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+const MONTHS=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+function fmt(d){return `${DAYS[d.getDay()]} ${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`;}
+function dk(d){return d.toISOString().slice(0,10);}
+function pad(n){return String(n).padStart(2,'0');}
+async function loadData(ds){
+  const url=ds===dk(new Date())?`${BASE}/data.json?t=${Date.now()}`:`${BASE}/history/${ds}.json?t=${Date.now()}`;
+  const r=await fetch(url);if(!r.ok)throw new Error('no data');return r.json();
+}
+function heroCard(bg,label,hasMatch,scoreRow,body){
+  return `<div class="hero-card"><div class="hero-head" style="background:${bg}"><div class="hero-label">${label}</div><div class="hero-tag">⭐ Ton équipe</div></div>${hasMatch?`<div class="hero-score-row">${scoreRow}</div>`:''}<div class="${hasMatch?'hero-body':'hero-body-ns'}"><div class="hero-fact">${body}</div></div></div>`;
+}
+function scoreCard(h,hc,sc,a,ac,{ot=false,note=''}={}){
+  return `<div class="score-card"><div class="sc-team"><div class="sc-name">${h}</div><div class="sc-city">${hc}</div></div><div class="sc-mid"><div class="sc-score">${sc}</div>${ot?'<div class="sc-tag tag-ot">Prol.</div>':''}${note?`<div class="sc-note">${note}</div>`:''}</div><div class="sc-team right"><div class="sc-name">${a}</div><div class="sc-city">${ac}</div></div></div>`;
+}
+function newsCard(ic,ie,lbl,txt){
+  return `<div class="news-card"><div class="news-icon ${ic}">${ie}</div><div><div class="news-lbl">${lbl}</div><div class="news-text">${txt}</div></div></div>`;
+}
+function secHead(t,bc,bt,lc){
+  return `<div class="section-header"><h2>${t}</h2>${bt?`<span class="s-badge" style="background:${bc}">${bt}</span>`:''}<div class="s-line" style="background:linear-gradient(90deg,${lc||bc},transparent)"></div></div>`;
+}
+let _dates=[];
+window.switchDay=async function(ds){
+  document.getElementById('loading').style.display='flex';
+  document.getElementById('app').style.display='none';
+  try{const d=await loadData(ds);render(d,ds,_dates);}
+  catch(e){document.getElementById('loading').innerHTML='<div style="text-align:center;color:#888;padding:40px"><div style="font-size:32px;margin-bottom:12px">📭</div>Aucune donnée pour cette date.</div>';}
+};
+function render(data,sel,avail){
+  const d=new Date(sel+'T12:00:00');
+  const today=dk(new Date());
+  const nav=avail.slice(0,7).map(ds=>{
+    const dd=new Date(ds+'T12:00:00');
+    const lbl=ds===today?'Auj.':`${dd.getDate()}/${pad(dd.getMonth()+1)}`;
+    return `<button class="day-btn${ds===sel?' active':''}" onclick="switchDay('${ds}')">${lbl}</button>`;
+  }).join('');
+  const m=data.meteo||{};
+  const events=data.planning||[];
+  const planHtml=events.length===0
+    ?`<div class="planning-card"><div class="planning-empty"><div class="e-icon">🎉</div><strong>Journée libre</strong>Aucun événement au calendrier</div></div>`
+    :`<div class="planning-card">${events.map(e=>`<div class="event-row"><div class="event-time">${e.time}</div><div><div class="event-title">${e.title}</div>${e.duration?`<div class="event-dur">${e.duration}</div>`:''}</div></div>`).join('')}</div>`;
+  const nhl=data.nhl||{};
+  let nhlHero;
+  if(nhl.canadiens_played){
+    const sc=nhl.canadiens_score||{};
+    nhlHero=heroCard('#0a3d7a','🏒 NHL · Hier soir',true,
+      `<div class="hero-team"><div class="hero-team-name">${sc.home}</div><div class="hero-team-sub">${sc.home_city}</div></div><div class="hero-score-num" style="color:#0a3d7a">${sc.score}</div><div class="hero-team right"><div class="hero-team-name">${sc.away}</div><div class="hero-team-sub">${sc.away_city}</div></div>`,
+      nhl.canadiens_summary||'');
+  }else{
+    nhlHero=heroCard('#0a3d7a','🏒 NHL · Actu Canadiens',false,'',nhl.canadiens_news||'⏸️ Pas de match hier.');
+  }
+  const nba=data.nba||{};
+  let nbaHero;
+  if(nba.spurs_played){
+    const sc=nba.spurs_score||{};
+    nbaHero=heroCard('#c8102e','🏀 NBA · Hier soir',true,
+      `<div class="hero-team"><div class="hero-team-name">${sc.home}</div><div class="hero-team-sub">${sc.home_city}</div></div><div class="hero-score-num" style="color:#c8102e">${sc.score}</div><div class="hero-team right"><div class="hero-team-name">${sc.away}</div><div class="hero-team-sub">${sc.away_city}</div></div>`,
+      nba.spurs_summary||'');
+  }else{
+    nbaHero=heroCard('#c8102e','🏀 NBA · Actu Spurs',false,'',
+      `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><div><div style="font-size:17px;font-weight:800;color:#c8102e">🖤 Spurs</div><div style="font-size:12px;color:#999">${nba.spurs_standing||'San Antonio'}</div></div><div style="text-align:right"><div style="font-size:11px;color:#bbb;margin-bottom:2px">Fiche</div><div style="font-family:'Oswald',sans-serif;font-size:28px;font-weight:700">${nba.spurs_record||'--'}</div></div></div>${nba.spurs_news||''}`);
+  }
+  const foot=data.football||{};
+  let omHero;
+  if(foot.om_played){
+    const sc=foot.om_score||{};
+    omHero=heroCard('#0d4f9e','⚽ Ligue 1 · Hier soir',true,
+      `<div class="hero-team"><div class="hero-team-name">${sc.home}</div><div class="hero-team-sub">${sc.home_city||''}</div></div><div class="hero-score-num" style="color:#0d4f9e">${sc.score}</div><div class="hero-team right"><div class="hero-team-name">${sc.away}</div><div class="hero-team-sub">${sc.away_city||''}</div></div>`,
+      foot.om_summary||'');
+  }else{
+    omHero=heroCard('#0d4f9e','⚽ Ligue 1 · Actu OM',false,'',foot.om_news||'⏸️ Pas de match hier.');
+  }
+  const footTables=(foot.top5_leagues||[]).map(l=>`<div class="foot-table"><div class="ft-head" style="background:${l.color}">${l.flag} ${l.name}<span>${l.date}</span></div>${(l.matches||[]).map(r=>`<div class="ft-row"><div class="ft-team">${r.home}</div><div class="ft-score">${r.score}</div><div class="ft-team right">${r.away}</div></div>`).join('')}</div>`).join('');
+  const omNews=(foot.om_extra_news||[]).map(n=>newsCard(n.icon_class||'ni-blue',n.icon||'📰',n.label,n.text)).join('');
+  const nhlNews=(nhl.news||[]).map(n=>newsCard(n.icon_class||'ni-orange',n.icon||'📰',n.label,n.text)).join('');
+  const nhlScores=(nhl.other_scores||[]).map(s=>scoreCard(s.home,s.home_city,s.score,s.away,s.away_city,{ot:s.ot,note:s.note})).join('');
+  const nbaScores=(nba.other_scores||[]).map(s=>scoreCard(s.home,s.home_city,s.score,s.away,s.away_city,{ot:s.ot})).join('');
+  const sugs=(data.suggestions||[]).map(s=>`<div class="sug-item"><div class="sug-time">${s.time}</div><div class="sug-text"><strong>${s.title}</strong> — ${s.text}</div></div>`).join('');
+  document.getElementById('app').innerHTML=`
+  <div class="masthead">
+    <div class="masthead-top"><h1>☀️ TON<br><span>BRIEFING</span></h1><div><div class="masthead-date">${fmt(d)}</div><div class="masthead-time">Généré à ${data.generated_at||'7h33'} · Montréal</div></div></div>
+    <div class="day-nav">${nav}</div>
+    <div class="fav-strip"><div class="fav-chip"><span class="dot dot-red"></span>Canadiens de Mtl</div><div class="fav-chip"><span class="dot dot-silver"></span>San Antonio Spurs</div><div class="fav-chip"><span class="dot dot-blue"></span>Olympique de Marseille</div></div>
+  </div>
+  <div class="meteo-wrap"><div class="meteo-card"><div><div class="meteo-label">🌤️ Météo du jour</div><div class="meteo-city">Montréal</div><div class="meteo-condition">${m.emoji||'🌤️'} ${m.condition||''}</div><div class="meteo-detail">${m.detail||''}</div>${m.alert?`<div class="meteo-alert">⚠️ ${m.alert}</div>`:''}</div><div style="text-align:right"><div class="meteo-temp">${m.temp||'--'}<sup>°C</sup></div><div class="meteo-range">↑ ${m.max||'--'}° · ↓ ${m.min||'--'}°</div></div></div></div>
+  <div class="section">${secHead('📅 Planning','#555','','#555')}${planHtml}</div>
+  <div style="margin:16px 16px 0">${nhlHero}</div>
+  <div class="section">${secHead('🏒 NHL','#0a3d7a','Ligue nationale','#0a3d7a')}<div class="scores-list">${nhlScores||'<div class="no-data">Aucun match hier</div>'}</div>${nhlNews}</div>
+  <div style="margin:16px 16px 0">${nbaHero}</div>
+  <div class="section">${secHead('🏀 NBA','#c8102e','Résultats','#c8102e')}<div class="scores-list">${nbaScores||'<div class="no-data">Aucun match hier</div>'}</div></div>
+  <div style="margin:16px 16px 0">${omHero}</div>
+  ${omNews?`<div style="margin:8px 16px 0">${omNews}</div>`:''}
+  <div class="section">${secHead('⚽ Football','#1a7a2e','Top 5 uniquement','#1a7a2e')}${footTables||'<p style="font-size:13px;color:#aaa;padding:4px">Aucun match top 5 hier.</p>'}</div>
+  <div class="section">${secHead('💡 Suggestions','#007AFF','','#007AFF')}<div class="suggestions">${sugs||'<div class="no-data">Aucune suggestion</div>'}</div></div>
+  <div class="app-footer"><div class="msg">${data.footer||'Bonne journée Thibaud 💪'}</div><div class="sub"><strong>Briefing Matinal</strong> · Mis à jour automatiquement chaque matin à 7h33</div></div>`;
+  document.getElementById('loading').style.display='none';
+  document.getElementById('app').style.display='block';
+}
+async function init(){
+  _dates=[];for(let i=0;i<7;i++){const d=new Date();d.setDate(d.getDate()-i);_dates.push(dk(d));}
+  for(const ds of _dates){try{const data=await loadData(ds);render(data,ds,_dates);return;}catch(e){}}
+  document.getElementById('loading').innerHTML='<div style="text-align:center;color:#888;padding:40px;max-width:320px"><div style="font-size:48px;margin-bottom:16px">🌅</div><strong style="color:#333;font-size:16px;display:block;margin-bottom:8px">Pas encore de briefing</strong>Le premier briefing sera disponible demain matin à 7h33.</div>';
+}
+init();
+</script>
+</body>
+</html>

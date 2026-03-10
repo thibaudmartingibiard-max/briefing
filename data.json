@@ -1,65 +1,310 @@
 {
-  "date": "2026-03-09",
+  "date": "2026-03-10",
   "generated_at": "7h33",
-  "footer": "Les Spurs écrasent Houston 145-120, Wemby dominant, l'OM au podium 🏆 — Bonne semaine Thibaud 💪",
+  "footer": "Les Habs ont rallié pour vaincre les Kings en déplacement, Wemby est en feu avec 29 pts et les Spurs enchaînent leur 4e victoire de suite — et toi t'as deux sessions padel aujourd'hui ! Belle journée avant la tempête de verglas. 🎾",
   "meteo": {
     "emoji": "🌤️",
-    "condition": "Soleil & nuages",
-    "detail": "💨 Vents 26 km/h · Humidité 86%",
+    "condition": "Soleil et nuages",
+    "detail": "💨 Vents 18 km/h · Humidité 69%",
     "temp": "10",
-    "max": "14",
-    "min": "-1",
-    "alert": null
+    "max": "10",
+    "min": "-2",
+    "alert": "⚠️ Pluie verglaçante prévue mercredi-jeudi (20–30 mm)"
   },
-  "planning": [],
+  "planning": [
+    {
+      "time": "10h00",
+      "title": "ANNULER SPOTIFY",
+      "duration": "1h"
+    },
+    {
+      "time": "12h30",
+      "title": "Padel — FVR Cathcart",
+      "duration": "1h30"
+    },
+    {
+      "time": "15h30",
+      "title": "Padel — FVR Cathcart",
+      "duration": "1h30"
+    }
+  ],
   "nhl": {
     "canadiens_played": false,
-    "canadiens_news": "⏸️ Pas de match hier soir. <strong>Prochain match : mardi 10 mars vs Toronto Maple Leafs</strong> — semaine chargée avec back-to-back. Laine toujours absent (abdomen).",
+    "canadiens_score": null,
+    "canadiens_summary": null,
+    "canadiens_news": "<strong>Victoire 4–3 à Los Angeles hier !</strong> Slafkovsky (2G+1A) et Suzuki (1G+2A) ont brillé. Slafkovsky devient le premier Canadien avec 3 saisons de 50+ pts avant 22 ans, égalant Henri Richard. Les Habs ont mis fin à 9 matchs sans victoire contre les Kings. Fiche : <strong>34–18–10</strong>, 4e division Atlantique.",
     "other_scores": [
-      {"home": "Sabres", "home_city": "Buffalo", "score": "8–7", "away": "Lightning", "away_city": "Tampa Bay", "ot": false, "note": "7e victoire consécutive 🔥"},
-      {"home": "Red Wings", "home_city": "Detroit", "score": "3–0", "away": "Devils", "away_city": "New Jersey", "ot": false, "note": ""},
-      {"home": "Islanders", "home_city": "New York", "score": "2–1", "away": "Sharks", "away_city": "San Jose", "ot": true, "note": ""}
+      {
+        "home": "Sabres",
+        "home_city": "Buffalo",
+        "score": "8–7",
+        "away": "Lightning",
+        "away_city": "Tampa Bay",
+        "ot": false,
+        "note": "But PPG de Doan en fin de match"
+      },
+      {
+        "home": "Red Wings",
+        "home_city": "Detroit",
+        "score": "2–1",
+        "away": "Maple Leafs",
+        "away_city": "Toronto",
+        "ot": false,
+        "note": null
+      },
+      {
+        "home": "Stars",
+        "home_city": "Dallas",
+        "score": "4–3",
+        "away": "Blackhawks",
+        "away_city": "Chicago",
+        "ot": false,
+        "note": "Bunting à ses débuts avec Dallas"
+      },
+      {
+        "home": "Blues",
+        "home_city": "St. Louis",
+        "score": "4–1",
+        "away": "Ducks",
+        "away_city": "Anaheim",
+        "ot": false,
+        "note": null
+      },
+      {
+        "home": "Kings",
+        "home_city": "Los Angeles",
+        "score": "5–4",
+        "away": "Blue Jackets",
+        "away_city": "Columbus",
+        "ot": true,
+        "note": "Kempe marque en prolongation"
+      },
+      {
+        "home": "Oilers",
+        "home_city": "Edmonton",
+        "score": "4–2",
+        "away": "Golden Knights",
+        "away_city": "Vegas",
+        "ot": false,
+        "note": null
+      }
     ],
     "news": [
-      {"icon_class": "ni-orange", "icon": "📅", "label": "Prochain match · Canadiens", "text": "CH vs <strong>Toronto Maple Leafs</strong> — Mardi 10 mars. Bloque ta soirée ! 🏒"}
+      {
+        "icon_class": "ni-blue",
+        "icon": "📅",
+        "label": "Prochain match",
+        "text": "Les Canadiens affrontent les <strong>Maple Leafs</strong> mardi 11 mars — derby Atlantique."
+      },
+      {
+        "icon_class": "ni-green",
+        "icon": "📈",
+        "label": "Slafkovsky historique",
+        "text": "<strong>Juraj Slafkovsky</strong> (163 pts avant 22 ans) égale Henri Richard dans l'histoire du club."
+      }
     ]
   },
   "nba": {
     "spurs_played": true,
-    "spurs_score": {"home": "🖤 Spurs", "home_city": "San Antonio", "score": "145–120", "away": "Rockets", "away_city": "Houston"},
-    "spurs_summary": "<strong>Wembanyama</strong> : 29 pts · <strong>De'Aaron Fox</strong> : 20 pts / 10 ast · <strong>Stephon Castle</strong> : 23 pts. San Antonio a shooté à <strong>58% au tir et 53% à 3 pts</strong>. 4e victoire consécutive 🔥",
+    "spurs_score": {
+      "home": "Spurs",
+      "home_city": "San Antonio",
+      "score": "145–120",
+      "away": "Rockets",
+      "away_city": "Houston"
+    },
+    "spurs_summary": "<strong>Wembanyama royal</strong> : 29 pts (9-13 FG), 8 reb, 4 contres en 30 min. De'Aaron Fox ajoute 20 pts et 10 passes. San Antonio tire à <strong>58% au tir</strong> et <strong>53% à trois points</strong> — masterclass collective pour une 4e victoire de suite.",
     "spurs_standing": "2e à l'Ouest · San Antonio",
-    "spurs_record": "45–17",
-    "spurs_news": "",
+    "spurs_record": "47–17",
+    "spurs_news": null,
     "other_scores": [
-      {"home": "Celtics", "home_city": "Boston", "score": "109–98", "away": "Cavaliers", "away_city": "Cleveland", "ot": false},
-      {"home": "Lakers", "home_city": "Los Angeles", "score": "vs", "away": "Knicks", "away_city": "New York", "ot": false}
+      {
+        "home": "Cavaliers",
+        "home_city": "Cleveland",
+        "score": "115–101",
+        "away": "76ers",
+        "away_city": "Philadelphia",
+        "ot": false
+      },
+      {
+        "home": "Jazz",
+        "home_city": "Utah",
+        "score": "119–116",
+        "away": "Warriors",
+        "away_city": "Golden State",
+        "ot": false
+      },
+      {
+        "home": "Clippers",
+        "home_city": "Los Angeles",
+        "score": "126–118",
+        "away": "Knicks",
+        "away_city": "New York",
+        "ot": false
+      }
     ]
   },
   "football": {
-    "om_played": false,
-    "om_news": "⏸️ Pas de match hier. Dernier résultat : <strong>victoire 1-0 à Toulouse</strong> (Greenwood, 7 mars). L'OM est <strong>3e en Ligue 1</strong>. <strong>Prochain match : Auxerre — vendredi 13 mars.</strong>",
+    "om_played": true,
+    "om_score": {
+      "home": "Toulouse",
+      "home_city": "",
+      "score": "0–1",
+      "away": "Marseille",
+      "away_city": ""
+    },
+    "om_summary": "L'OM s'impose <strong>1–0 à Toulouse</strong> samedi en Ligue 1, belle victoire à l'extérieur qui confirme la dynamique sous <strong>Habib Beye</strong>. Marseille est <strong>4e en Ligue 1</strong>, Greenwood à 23 buts.",
+    "om_news": null,
     "om_extra_news": [
-      {"icon_class": "ni-blue", "icon": "🎙️", "label": "Officiel · OM", "text": "<strong>Habib Beye</strong> — accord de principe pour rejoindre l'OM comme directeur sportif."},
-      {"icon_class": "ni-green", "icon": "📅", "label": "Prochain match · OM", "text": "OM vs <strong>Auxerre</strong> — Vendredi 13 mars · Puis Lille le 22 mars."}
+      {
+        "icon_class": "ni-green",
+        "icon": "⚽",
+        "label": "Greenwood en feu",
+        "text": "<strong>Mason Greenwood</strong> mène l'OM avec <strong>23 buts</strong> en Ligue 1."
+      },
+      {
+        "icon_class": "ni-blue",
+        "icon": "📅",
+        "label": "Prochain match",
+        "text": "OM reçoit <strong>Auxerre</strong> vendredi 13 mars à 20h45 au Vélodrome."
+      },
+      {
+        "icon_class": "ni-orange",
+        "icon": "🎙️",
+        "label": "Nouveau coach",
+        "text": "<strong>Habib Beye</strong> officiellement nommé entraîneur le 18 février 2026."
+      }
     ],
     "top5_leagues": [
+      {
+        "color": "#3d195b",
+        "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+        "name": "FA Cup — 5e tour",
+        "date": "7–9 mars 2026",
+        "matches": [
+          {
+            "home": "Arsenal",
+            "score": "2–1",
+            "away": "Mansfield"
+          },
+          {
+            "home": "Chelsea",
+            "score": "4–2 aet",
+            "away": "Wrexham"
+          },
+          {
+            "home": "Newcastle",
+            "score": "1–3",
+            "away": "Man City"
+          },
+          {
+            "home": "Fulham",
+            "score": "0–1",
+            "away": "Southampton"
+          },
+          {
+            "home": "Leeds Utd",
+            "score": "3–0",
+            "away": "Norwich"
+          },
+          {
+            "home": "West Ham",
+            "score": "2–2 (5-3 p.)",
+            "away": "Brentford"
+          }
+        ]
+      },
+      {
+        "color": "#0a2e6e",
+        "flag": "🇫🇷",
+        "name": "Ligue 1",
+        "date": "Prochains — 13 mars",
+        "matches": [
+          {
+            "home": "OM",
+            "score": "vs",
+            "away": "Auxerre"
+          },
+          {
+            "home": "Brest",
+            "score": "vs",
+            "away": "Monaco"
+          },
+          {
+            "home": "Lyon",
+            "score": "vs",
+            "away": "Le Havre"
+          }
+        ]
+      },
       {
         "color": "#cf1920",
         "flag": "🇪🇸",
         "name": "LaLiga",
-        "date": "8 mars 2026",
+        "date": "Prochains — 13–15 mars",
         "matches": [
-          {"home": "Getafe", "score": "vs", "away": "Real Betis"},
-          {"home": "Séville", "score": "vs", "away": "Rayo Vallecano"}
+          {
+            "home": "Atlético",
+            "score": "vs",
+            "away": "Getafe"
+          },
+          {
+            "home": "Real Madrid",
+            "score": "vs",
+            "away": "Elche"
+          },
+          {
+            "home": "Barcelona",
+            "score": "vs",
+            "away": "Séville"
+          }
+        ]
+      },
+      {
+        "color": "#d00027",
+        "flag": "🇩🇪",
+        "name": "Bundesliga",
+        "date": "Prochains — 14–15 mars",
+        "matches": [
+          {
+            "home": "Leverkusen",
+            "score": "vs",
+            "away": "Bayern"
+          },
+          {
+            "home": "Stuttgart",
+            "score": "vs",
+            "away": "RB Leipzig"
+          }
         ]
       }
     ]
   },
   "suggestions": [
-    {"time": "9h–12h", "title": "Travail profond", "text": "lundi matin libre, idéal pour ta tâche la plus difficile de la semaine"},
-    {"time": "13h–14h", "title": "Emails & messages", "text": "rattrapage du weekend, réponses prioritaires"},
-    {"time": "14h–16h", "title": "Plan de semaine", "text": "bloque tes créneaux avant que les réunions s'installent"},
-    {"time": "Soir", "title": "Match CH vs Maple Leafs demain", "text": "bloque la soirée du 10 mars 🏒"}
+    {
+      "time": "9h–12h30",
+      "title": "Matinée productive avant le padel",
+      "text": "Matinée libre jusqu'à 12h30 — idéal pour du travail profond, régler tes emails ou enfin ANNULER SPOTIFY une fois pour toutes !"
+    },
+    {
+      "time": "12h30–17h",
+      "title": "Double session padel 🎾",
+      "text": "Deux réservations FVR Cathcart aujourd'hui (12h30 et 15h30). Pense à t'hydrater entre les deux et à prévoir des vêtements de rechange."
+    },
+    {
+      "time": "17h–18h",
+      "title": "Anticiper le verglas ❄️",
+      "text": "Pluie verglaçante prévue mercredi-jeudi (20–30 mm). Fais tes courses et déplacements importants aujourd'hui ou demain matin."
+    },
+    {
+      "time": "Ce soir",
+      "title": "Spurs vs Celtics 🏀",
+      "text": "Les Spurs reçoivent Boston ce soir. Match à ne pas manquer — Wemby en feu après 29 pts vs Houston hier !"
+    },
+    {
+      "time": "Vendredi 13 mars",
+      "title": "OM vs Auxerre ⚽",
+      "text": "L'OM reçoit Auxerre vendredi à 20h45 au Vélodrome. Réserve ta soirée — Greenwood en feu va vouloir poursuivre sur ses 23 buts !"
+    }
   ]
 }
